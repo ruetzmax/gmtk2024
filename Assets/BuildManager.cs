@@ -6,7 +6,10 @@ public class BuildManager : MonoBehaviour
 {
     public GameObject activePartPrefab;
 
+
     public GameObject tilePrefab;
+    public GameObject canonPrefab;
+    public GameObject thrusterPrefab;
 
     private GameObject activePartObject;
     void Start()
@@ -27,6 +30,16 @@ public class BuildManager : MonoBehaviour
         {
             placeActivePart();
         }
+
+        if (Input.GetKeyDown(KeyCode.O))
+        {
+            setActivePart(canonPrefab);
+        }
+        else if (Input.GetKeyDown(KeyCode.P))
+        {
+            setActivePart(thrusterPrefab);
+        }
+
     }
 
     public void deactivated(){
@@ -40,6 +53,10 @@ public class BuildManager : MonoBehaviour
 
     public void setActivePart(GameObject part)
     {
+        if (activePartObject != null)
+        {
+            Destroy(activePartObject);
+        }
         activePartPrefab = part;
         activePartObject = Instantiate(activePartPrefab);
         Color spriteColor = activePartObject.GetComponent<SpriteRenderer>().color;
