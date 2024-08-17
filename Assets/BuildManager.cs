@@ -1,19 +1,23 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class BuildManager : MonoBehaviour
 {
-    public GameObject activePartPrefab;
+    public Part activePart;
 
 
     public GameObject tilePrefab;
     public GameObject canonPrefab;
     public GameObject thrusterPrefab;
+    public List<Part> availableParts;
 
     private GameObject activePartObject;
     void Start()
     {
+        generateAvailableParts();
+
     }
 
     // Update is called once per frame
@@ -26,52 +30,72 @@ public class BuildManager : MonoBehaviour
 
         updateActivePartPosition();
 
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButtonDown(0) && !EventSystem.current.IsPointerOverGameObject())
         {
             placeActivePart();
         }
 
-        if (Input.GetKeyDown(KeyCode.O))
+        if (Input.GetKeyDown(KeyCode.E))
         {
-            setActivePart(canonPrefab);
+            rotateActivePart(true);
         }
-        else if (Input.GetKeyDown(KeyCode.P))
+        else if (Input.GetKeyDown(KeyCode.Q))
         {
-            setActivePart(thrusterPrefab);
+            rotateActivePart(false);
         }
+
 
     }
 
     public void deactivated(){
-        activePartPrefab = null;
+        UIManager.instance.hideBuildUI();
+        activePart = null;
         Destroy(activePartObject);
     }
 
     public void activated() {
+        UIManager.instance.fillPartsView(availableParts);
+        UIManager.instance.showBuildUI();
         setActivePart(tilePrefab);
     }
 
-    public void setActivePart(GameObject part)
+    private void addAvailablePart(GameObject prefab, GameObject uiElement = null){
+        availableParts.Add(new Part { prefab = prefab, uiElement = uiElement });
+    }
+    public void generateAvailableParts()
+    {
+        availableParts = new List<Part>();
+
+        //only temporary, generate depending randomly and with previous ship versions
+        addAvailablePart(tilePrefab);
+        addAvailablePart(canonPrefab);
+        addAvailablePart(thrusterPrefab);
+    }
+    public void setActivePart(Part part)
     {
         if (activePartObject != null)
         {
             Destroy(activePartObject);
         }
-        activePartPrefab = part;
-        activePartObject = Instantiate(activePartPrefab);
+        activePart = part;
+        activePartObject = Instantiate(activePart.prefab);
         Color spriteColor = activePartObject.GetComponent<SpriteRenderer>().color;
         spriteColor.a = 0.5f;
         activePartObject.GetComponent<SpriteRenderer>().color = spriteColor;
         activePartObject.GetComponent<Rigidbody2D>().isKinematic = false;
     }
 
+    public void setActivePart(GameObject prefab, GameObject uiElement = null)
+    {
+        setActivePart(new Part { prefab = prefab, uiElement = uiElement });
+    }
+
     private void updateActivePartPosition()
     {
-       if (activePartPrefab == null || activePartObject == null)
+       if (activePart == null || activePartObject == null)
        {
            return;
        }
-    //aaaaa
         Vector3 objectPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         activePartObject.transform.position = new Vector2(Mathf.Round(objectPosition.x), Mathf.Round(objectPosition.y));
     }
@@ -109,9 +133,26 @@ public class BuildManager : MonoBehaviour
         return true;
     }
 
+    private void rotateActivePart(bool clockwise = true)
+    {
+        if (activePart == null || activePartObject == null)
+        {
+            return;
+        }
+
+        if (clockwise)
+        {
+            activePartObject.transform.Rotate(0, 0, -90);
+        }
+        else
+        {
+            activePartObject.transform.Rotate(0, 0, 90);
+        }
+    }
+
     private void placeActivePart()
     {
-        if (activePartPrefab == null || activePartObject == null)
+        if (activePart == null || activePartObject == null)
         {
             return;
         }
@@ -131,12 +172,20 @@ public class BuildManager : MonoBehaviour
         activePartObject.transform.SetParent(GameManager.instance.shipObject.transform.Find("parts"));
         activePartObject.GetComponent<Rigidbody2D>().isKinematic = true;
 
-        activePartPrefab = null;
+        Destroy(activePart.uiElement);
+        availableParts.Remove(activePart);
+
+        activePart = null;
         activePartObject = null;
 
 
         //DEBUG
-        setActivePart(tilePrefab);
+        // setActivePart(tilePrefab);
     }
 
+}
+
+public class Part{
+    public GameObject prefab;
+    public GameObject uiElement;
 }

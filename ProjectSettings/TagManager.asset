@@ -6,6 +6,9 @@ TagManager:
   tags:
   - BuildManager
   - Ship
+  - Canon
+  - Thruster
+  - Tile
   layers:
   - Default
   - TransparentFX

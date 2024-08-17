@@ -5,7 +5,7 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
     public GameObject shipObject;
-    private BuildManager buildManager;
+    public BuildManager buildManager;
     private Ship ship;
     public GameState gameState = GameState.BUILD;
     public static GameManager instance;
