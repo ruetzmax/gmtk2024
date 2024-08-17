@@ -19,6 +19,8 @@ public class UIManager : MonoBehaviour
     public void showBuildUI()
     {
         buildUI.SetActive(true);
+        Canvas.ForceUpdateCanvases();
+
     }
     public void hideBuildUI()
     {
@@ -37,12 +39,13 @@ public class UIManager : MonoBehaviour
         foreach (Part part in parts)
         {
             GameObject partButton = Instantiate(partButtonPrefab);
-            partButton.transform.SetParent(scrollViewContent.transform);
+            partButton.transform.SetParent(scrollViewContent.transform, false);
             partButton.GetComponentInChildren<TMP_Text>().text = part.prefab.tag;
             partButton.GetComponent<Button>().onClick.AddListener(() => GameManager.instance.buildManager.setActivePart(part));
             part.uiElement = partButton;
-            Canvas.ForceUpdateCanvases();
         }
+        Canvas.ForceUpdateCanvases();
+
 
     }
 }

@@ -16,8 +16,6 @@ public class BuildManager : MonoBehaviour
     private GameObject activePartObject;
     void Start()
     {
-        generateAvailableParts();
-
     }
 
     // Update is called once per frame
@@ -29,6 +27,7 @@ public class BuildManager : MonoBehaviour
         }  
 
         updateActivePartPosition();
+        GameManager.instance.shipObject.transform.position = new Vector3(0, 0, 0);
 
         if (Input.GetMouseButtonDown(0) && !EventSystem.current.IsPointerOverGameObject())
         {
@@ -56,7 +55,6 @@ public class BuildManager : MonoBehaviour
     public void activated() {
         UIManager.instance.fillPartsView(availableParts);
         UIManager.instance.showBuildUI();
-        setActivePart(tilePrefab);
     }
 
     private void addAvailablePart(GameObject prefab, GameObject uiElement = null){
