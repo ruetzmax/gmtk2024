@@ -167,6 +167,7 @@ public class BuildManager : MonoBehaviour
 
         FixedJoint2D joint = activePartObject.AddComponent<FixedJoint2D>();
         joint.connectedBody = GameManager.instance.shipObject.GetComponent<Rigidbody2D>();
+        joint.enableCollision = false;
         activePartObject.transform.SetParent(GameManager.instance.shipObject.transform.Find("parts"));
         activePartObject.GetComponent<Rigidbody2D>().isKinematic = true;
 

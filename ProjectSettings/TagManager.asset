@@ -6,8 +6,9 @@ TagManager:
   tags:
   - BuildManager
   - Ship
-  - Canon
   - Thruster
+  - Canon
+  - CanonBall
   - Tile
   - Portal
   layers:

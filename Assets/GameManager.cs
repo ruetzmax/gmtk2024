@@ -13,14 +13,12 @@ public class GameManager : MonoBehaviour
     [HideInInspector]
     public GameState gameState = GameState.BUILD;
     public static GameManager instance;
-
-
     //level config
     private int level = 0;
     public int maxPortalDistance = 10;
     public float maxPortalDistanceMultiplier = 1.5f;
 
-    void Start()
+    void Awake()
     {
         buildManager = GameObject.FindGameObjectWithTag("BuildManager").GetComponent<BuildManager>();
         ship = GameObject.FindGameObjectWithTag("Ship").GetComponent<Ship>();

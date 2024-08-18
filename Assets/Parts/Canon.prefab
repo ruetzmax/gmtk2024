@@ -96,6 +96,7 @@ GameObject:
   - component: {fileID: 5846495621735631486}
   - component: {fileID: 4520406819730990494}
   - component: {fileID: -2307715523249537565}
+  - component: {fileID: -8006334923669884177}
   m_Layer: 0
   m_Name: Canon
   m_TagString: Canon
@@ -195,7 +196,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 0.7, y: 0.7}
   m_EdgeRadius: 0
 --- !u!50 &-2307715523249537565
 Rigidbody2D:
@@ -218,3 +219,15 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
+--- !u!114 &-8006334923669884177
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6742904833212176520}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d2a811e11a27c884ba457bce6647dd7b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
