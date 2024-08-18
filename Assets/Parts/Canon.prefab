@@ -95,8 +95,8 @@ GameObject:
   - component: {fileID: 5004394409934049452}
   - component: {fileID: 5846495621735631486}
   - component: {fileID: 4520406819730990494}
-  - component: {fileID: -2307715523249537565}
   - component: {fileID: -8006334923669884177}
+  - component: {fileID: -5189830054163525439}
   m_Layer: 0
   m_Name: Canon
   m_TagString: Canon
@@ -198,27 +198,6 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.7, y: 0.7}
   m_EdgeRadius: 0
---- !u!50 &-2307715523249537565
-Rigidbody2D:
-  serializedVersion: 4
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6742904833212176520}
-  m_BodyType: 0
-  m_Simulated: 1
-  m_UseFullKinematicContacts: 0
-  m_UseAutoMass: 0
-  m_Mass: 1
-  m_LinearDrag: 0
-  m_AngularDrag: 0.05
-  m_GravityScale: 0
-  m_Material: {fileID: 0}
-  m_Interpolate: 0
-  m_SleepingMode: 1
-  m_CollisionDetection: 0
-  m_Constraints: 0
 --- !u!114 &-8006334923669884177
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -232,3 +211,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   canonBall: {fileID: 9089542666413260384, guid: e02d57f740d02e3418bf1724607fc93d, type: 3}
+--- !u!114 &-5189830054163525439
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6742904833212176520}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7136fa1fcc1ca96438a108b4305237c4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speedThreshold: 5

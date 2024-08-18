@@ -5,7 +5,11 @@ using UnityEngine;
 public class Ship : MonoBehaviour
 {
     // Start is called before the first frame update
-    public float thrusterStrength = 5;
+    public float thrusterMovementStrength = 2;
+    public float thrusterRotationStrength = 0.5f;
+
+    public float baseMovementForce = 3;
+    public float baseRotationForce = 3;
     void Start()
     {
     }
@@ -17,22 +21,7 @@ public class Ship : MonoBehaviour
         {
             return;
         }
-        if (Input.GetKey(KeyCode.W))
-        {
-            activateThrusters(Vector3.up);
-        }
-        if (Input.GetKey(KeyCode.A))
-        {
-            activateThrusters(Vector3.left);
-        }
-        if (Input.GetKey(KeyCode.S))
-        {
-            activateThrusters(Vector3.down);
-        }
-        if (Input.GetKey(KeyCode.D))
-        {
-            activateThrusters(Vector3.right);
-        }
+        handleThrusters();
         // Canon
         // get mouse position
         // loop over all canons
@@ -48,7 +37,7 @@ public class Ship : MonoBehaviour
 
     }
 
-    void setPositionToTileAvg()
+    public void setPositionToTileAvg()
     {
         Vector3 avgPosition = Vector3.zero;
         int numParts = transform.Find("parts").childCount;
@@ -70,8 +59,33 @@ public class Ship : MonoBehaviour
         }
     }
 
-    void activateThrusters(Vector3 direction)
+    // void activateThrusters(Vector3 direction)
+    // {
+    //     for (int i = 0; i < transform.Find("parts").childCount; i++)
+    //     {
+    //         Transform shipPart = transform.Find("parts").GetChild(i);
+    //         if (shipPart.tag != "Thruster")
+    //         {
+    //             continue;
+    //         }
+    //         Thruster thruster = shipPart.GetComponent<Thruster>();
+    //         float angle = Vector3.Angle(shipPart.up, direction);
+    //         Debug.Log(angle);
+    //         if (angle > 50)
+    //         {
+    //             continue;
+    //         }
+    //         Debug.Log("Firing");
+    //         thruster.Fire(thrusterStrength);
+    //     }
+    // }
+
+     void handleThrusters()
     {
+        int upCount = 0;
+        int downCount = 0;
+        int leftCount = 0;
+        int rightCount = 0;
         for (int i = 0; i < transform.Find("parts").childCount; i++)
         {
             Transform shipPart = transform.Find("parts").GetChild(i);
@@ -79,16 +93,42 @@ public class Ship : MonoBehaviour
             {
                 continue;
             }
-            Thruster thruster = shipPart.GetComponent<Thruster>();
-            float angle = Vector3.Angle(shipPart.up, direction);
-            Debug.Log(angle);
-            if (angle > 50)
+            float rotation = shipPart.transform.localEulerAngles.z;
+            if (rotation % 360 == 0)
             {
-                continue;
+                upCount++;
             }
-            Debug.Log("Firing");
-            thruster.Fire(thrusterStrength);
+            else if (rotation % 360 == 180)
+            {
+                downCount++;
+            }
+            else if (rotation % 360 == 90)
+            {
+                leftCount++;
+            }
+            else if (rotation % 360 == 270)
+            {
+                rightCount++;
+            }
         }
+
+        if (Input.GetKey(KeyCode.W))
+        {
+            GetComponent<Rigidbody2D>().AddForce(transform.up * (baseMovementForce + upCount*thrusterMovementStrength));
+        }
+        if (Input.GetKey(KeyCode.S))
+        {
+            GetComponent<Rigidbody2D>().AddForce(-transform.up * (baseMovementForce + downCount*thrusterMovementStrength));
+        }
+        if (Input.GetKey(KeyCode.A))
+        {
+            GetComponent<Rigidbody2D>().AddTorque(baseRotationForce + leftCount*thrusterRotationStrength);
+        }
+        if (Input.GetKey(KeyCode.D))
+        {
+            GetComponent<Rigidbody2D>().AddTorque(-(baseRotationForce + rightCount*thrusterRotationStrength));
+        }
+        
     }
 
     void rotateCanons(Vector3 mousePos)

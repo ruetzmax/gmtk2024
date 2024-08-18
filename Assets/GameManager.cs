@@ -1,12 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
     public GameObject shipObject;
     public GameObject portalPrefab;
-    private GameObject portalObject;
+    [HideInInspector]
+    public GameObject portalObject;
     [HideInInspector]
     public BuildManager buildManager;
     private Ship ship;
@@ -14,7 +16,8 @@ public class GameManager : MonoBehaviour
     public GameState gameState = GameState.BUILD;
     public static GameManager instance;
     //level config
-    private int level = 0;
+    [HideInInspector]
+    public int level = 0;
     public int maxPortalDistance = 10;
     public float maxPortalDistanceMultiplier = 1.5f;
 
@@ -33,11 +36,16 @@ public class GameManager : MonoBehaviour
         {
             toggleGameState();
         }
+
+        if (gameState == GameState.END && Input.GetKeyDown(KeyCode.Space))
+        {
+            SceneManager.LoadScene("main");
+        }
         
     }
 
     public void nextLevel()
-    {
+    {        
         //update values
         level++;
         maxPortalDistance = (int)(maxPortalDistance * maxPortalDistanceMultiplier);
@@ -54,13 +62,24 @@ public class GameManager : MonoBehaviour
         portalObject = Instantiate(portalPrefab, new Vector3(portalPosition.x, portalPosition.y, 0), Quaternion.identity);
 
         //update game state
-        buildManager.generateAvailableParts();
+        buildManager.generateAvailableParts(level);
         setGameState(GameState.BUILD);
     }
 
     public void finishedBuilding()
     {
+        if (buildManager.availableParts.Count > 0)
+        {
+            UIManager.instance.showInfoMessage("You have to use all parts!");
+            return;
+        }
+
+        ship.setPositionToTileAvg();
+        buildManager.previousShip = Instantiate(shipObject);
+        buildManager.previousShip.SetActive(false);
+
         setGameState(GameState.PLAY);
+        UIManager.instance.showInfoMessage("Level " + level);
     }
 
     void toggleGameState()
@@ -80,19 +99,35 @@ public class GameManager : MonoBehaviour
         if (state == GameState.BUILD)
         {
             buildManager.activated();
+            UIManager.instance.showBuildUI();
             //ship.deactivated();
         }
         else if (state == GameState.PLAY)
         {
             buildManager.deactivated();
+            UIManager.instance.showPlayUI();
             //ship.activated();
         }
         gameState = state;
     }
+
+    public void objectKilled(GameObject obj)
+    {
+        if (obj.tag == "Ship")
+        {
+            gameState = GameState.END;
+            UIManager.instance.hidePlayUI();
+            Destroy(obj);
+            UIManager.instance.showInfoMessage("You died! Press SPACE to restart.");
+
+        }
+    }
 }
+
 
 public enum GameState
 {
     BUILD,
-    PLAY
+    PLAY,
+    END
 }

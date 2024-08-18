@@ -95,8 +95,8 @@ GameObject:
   - component: {fileID: 5004394409934049452}
   - component: {fileID: 5846495621735631486}
   - component: {fileID: 4520406819730990494}
-  - component: {fileID: -2307715523249537565}
   - component: {fileID: 2651554378082235091}
+  - component: {fileID: 1223089249357230774}
   m_Layer: 0
   m_Name: Thruster
   m_TagString: Thruster
@@ -198,28 +198,20 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.7, y: 0.7}
   m_EdgeRadius: 0
---- !u!50 &-2307715523249537565
-Rigidbody2D:
-  serializedVersion: 4
+--- !u!114 &2651554378082235091
+MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6742904833212176520}
-  m_BodyType: 0
-  m_Simulated: 1
-  m_UseFullKinematicContacts: 0
-  m_UseAutoMass: 0
-  m_Mass: 3.82
-  m_LinearDrag: 5.35
-  m_AngularDrag: 4.73
-  m_GravityScale: 0
-  m_Material: {fileID: 0}
-  m_Interpolate: 0
-  m_SleepingMode: 1
-  m_CollisionDetection: 1
-  m_Constraints: 0
---- !u!114 &2651554378082235091
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 104de5df3075a284fa2b0a1550d14ffd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  drag: 1
+--- !u!114 &1223089249357230774
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -228,7 +220,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 6742904833212176520}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 104de5df3075a284fa2b0a1550d14ffd, type: 3}
+  m_Script: {fileID: 11500000, guid: 7136fa1fcc1ca96438a108b4305237c4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  drag: 1
+  speedThreshold: 5
