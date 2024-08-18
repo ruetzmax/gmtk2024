@@ -18,7 +18,7 @@ public class GameManager : MonoBehaviour
     public int maxPortalDistance = 10;
     public float maxPortalDistanceMultiplier = 1.5f;
 
-    void Awake()
+    void Start()
     {
         buildManager = GameObject.FindGameObjectWithTag("BuildManager").GetComponent<BuildManager>();
         ship = GameObject.FindGameObjectWithTag("Ship").GetComponent<Ship>();

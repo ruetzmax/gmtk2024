@@ -80,7 +80,9 @@ public class BuildManager : MonoBehaviour
         Color spriteColor = activePartObject.GetComponent<SpriteRenderer>().color;
         spriteColor.a = 0.5f;
         activePartObject.GetComponent<SpriteRenderer>().color = spriteColor;
-        activePartObject.GetComponent<Rigidbody2D>().isKinematic = false;
+        //activePartObject.GetComponent<Rigidbody2D>().isKinematic = false;
+        activePartObject.GetComponent<Collider2D>().isTrigger = true;
+
     }
 
     public void setActivePart(GameObject prefab, GameObject uiElement = null)
@@ -169,7 +171,8 @@ public class BuildManager : MonoBehaviour
         joint.connectedBody = GameManager.instance.shipObject.GetComponent<Rigidbody2D>();
         joint.enableCollision = false;
         activePartObject.transform.SetParent(GameManager.instance.shipObject.transform.Find("parts"));
-        activePartObject.GetComponent<Rigidbody2D>().isKinematic = true;
+        //activePartObject.GetComponent<Rigidbody2D>().isKinematic = false;
+        activePartObject.GetComponent<Collider2D>().isTrigger = false;
 
         Destroy(activePart.uiElement);
         availableParts.Remove(activePart);

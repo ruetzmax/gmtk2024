@@ -21,9 +21,9 @@ public class Canon : MonoBehaviour
     public void Rotate(Vector3 mouseDir)
     {
         mouseDir.z = 0;
-        Debug.Log(transform);
+        // Debug.Log(transform);
         // spriteChild = transform.Find("canon");
-        Debug.Log(spriteChild);
+        // Debug.Log(spriteChild);
         float angle = Vector3.SignedAngle(transform.up, mouseDir, Vector3.forward);
         float spriteTuUp = Vector3.SignedAngle(spriteChild.up, transform.up, Vector3.forward);
         angle = Mathf.Sign(angle) * Mathf.Min(Mathf.Abs(angle), 70);

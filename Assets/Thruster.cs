@@ -20,6 +20,7 @@ public class Thruster : MonoBehaviour
 
     public void Fire(float thrusterStrength)
     {
+        Debug.Log("Adding force");
         m_Rigidbody.AddForce(transform.up * thrusterStrength);
     }
 }

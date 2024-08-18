@@ -57,11 +57,12 @@ public class Ship : MonoBehaviour
             }
             Thruster thruster = shipPart.GetComponent<Thruster>();
             float angle = Vector3.Angle(shipPart.up, direction);
-            // Debug.Log(angle);
-            if (angle > 45)
+            Debug.Log(angle);
+            if (angle > 50)
             {
                 continue;
             }
+            Debug.Log("Firing");
             thruster.Fire(thrusterStrength);
         }
     }
@@ -75,11 +76,11 @@ public class Ship : MonoBehaviour
             {
                 continue;
             }
-            Debug.Log(shipPart);
+            // Debug.Log(shipPart);
             Canon canon = shipPart.GetComponent<Canon>();
-            Debug.Log(canon);
+            // Debug.Log(canon);
             Vector3 mouseDir = mousePos - shipPart.position;
-            Debug.Log(mouseDir);
+            // Debug.Log(mouseDir);
             canon.Rotate(mouseDir);
         }
     }
