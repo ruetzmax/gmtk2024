@@ -9,6 +9,8 @@ TagManager:
   - Thruster
   - Canon
   - CanonBall
+  - Tile
+  - Portal
   layers:
   - Default
   - TransparentFX
