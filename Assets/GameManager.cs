@@ -18,7 +18,7 @@ public class GameManager : MonoBehaviour
     //level config
     [HideInInspector]
     public int level = 0;
-    public int maxPortalDistance = 10;
+    public int portalDistance = 15;
     public float maxPortalDistanceMultiplier = 1.5f;
 
     void Start()
@@ -48,17 +48,19 @@ public class GameManager : MonoBehaviour
     {        
         //update values
         level++;
-        maxPortalDistance = (int)(maxPortalDistance * maxPortalDistanceMultiplier);
+        portalDistance = (int)(portalDistance * maxPortalDistanceMultiplier);
         //reset ship
         shipObject.transform.position = new Vector3(0, 0, 0);
         shipObject.transform.rotation = Quaternion.identity;
+        shipObject.GetComponent<HealthManager>().resetHealth();
     
         //new portal
         if (portalObject != null)
         {
             Destroy(portalObject);
         }
-        Vector2 portalPosition = Random.insideUnitCircle * maxPortalDistance;
+        float angle = Random.Range(0, 2 * Mathf.PI);
+        Vector2 portalPosition = new Vector2(Mathf.Cos(angle), Mathf.Sin(angle)) * portalDistance;;
         portalObject = Instantiate(portalPrefab, new Vector3(portalPosition.x, portalPosition.y, 0), Quaternion.identity);
 
         //update game state

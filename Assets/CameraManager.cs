@@ -20,5 +20,14 @@ public class CameraManager : MonoBehaviour
         
         Vector3 shipPosition = GameManager.instance.shipObject.transform.position;
         transform.position = new Vector3(shipPosition.x, shipPosition.y, -10);
+
+        Bounds shipBounds = new Bounds(GameManager.instance.shipObject.transform.position, Vector3.zero);
+        foreach (Renderer renderer in GameManager.instance.shipObject.GetComponentsInChildren<Renderer>())
+        {
+            shipBounds.Encapsulate(renderer.bounds);
+        }
+
+        float cameraSize = Mathf.Max(shipBounds.size.x + 10, shipBounds.size.y + 10);
+        Camera.main.orthographicSize = cameraSize / 2;
     }
 }

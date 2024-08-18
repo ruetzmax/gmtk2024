@@ -40,16 +40,26 @@ public class Ship : MonoBehaviour
     public void setPositionToTileAvg()
     {
         Vector3 avgPosition = Vector3.zero;
+        Transform closestPart = null;
+        float closestDistance = float.MaxValue;
+
         int numParts = transform.Find("parts").childCount;
         for (int i = 0; i < numParts; i++)
         {
             Transform shipPart = transform.Find("parts").GetChild(i);
             avgPosition += shipPart.position;
+
+            float distance = Vector3.Distance(avgPosition / (i + 1), shipPart.position);
+            if (distance < closestDistance)
+            {
+                closestDistance = distance;
+                closestPart = shipPart;
+            }
         }
         avgPosition /= numParts;
-        Vector3 parentOffset = avgPosition - transform.position;
 
-        transform.position = avgPosition;
+        Vector3 parentOffset = closestPart.position - transform.position;
+        transform.position = closestPart.position;
 
         // Adjust the children's positions to keep them in the same world position
         for (int i = 0; i < numParts; i++)
