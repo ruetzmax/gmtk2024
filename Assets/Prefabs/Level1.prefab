@@ -1,0 +1,58 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &1141034640238632486
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 879020707850359546}
+  - component: {fileID: 1220909082707710337}
+  m_Layer: 0
+  m_Name: Level1
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &879020707850359546
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1141034640238632486}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1220909082707710337
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1141034640238632486}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: db76d88de9948064b8831ed77b03fb11, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  flyCount: 1
+  beetleCount: 1
+  wormCount: 1
+  flySpawnRate: 10
+  beetleSpawnRate: 10
+  wormSpawnRate: 10
+  flySpawnDist: 10
+  beetleSpawnDist: 10
+  wormSpawnDist: 10
+  flyEnemyPrefab: {fileID: 4551119820238596826, guid: ae48e34d4e27cce47a957cf08f82af77, type: 3}
+  beetleEnemyPrefab: {fileID: 5545796152996631969, guid: 75d72cd4f1806df4b9f2c7020ffd1e9b, type: 3}
+  wormEnemyPrefab: {fileID: 5245518115999162092, guid: ef30db5e73c068940a6628b588c88339, type: 3}

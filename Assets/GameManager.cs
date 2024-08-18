@@ -21,6 +21,8 @@ public class GameManager : MonoBehaviour
     public int maxPortalDistance = 10;
     public float maxPortalDistanceMultiplier = 1.5f;
 
+    private Level currLevel;
+
     void Start()
     {
         buildManager = GameObject.FindGameObjectWithTag("BuildManager").GetComponent<BuildManager>();
@@ -45,25 +47,44 @@ public class GameManager : MonoBehaviour
     }
 
     public void nextLevel()
-    {        
-        //update values
+    {
         level++;
+        startLevel(level);
+    }
+
+    void startLevel(int level)
+    {
+        if (currLevel != null)
+        {
+            currLevel.endLevel();
+        }
+        //update values
         maxPortalDistance = (int)(maxPortalDistance * maxPortalDistanceMultiplier);
         //reset ship
         shipObject.transform.position = new Vector3(0, 0, 0);
         shipObject.transform.rotation = Quaternion.identity;
-    
+
         //new portal
         if (portalObject != null)
         {
             Destroy(portalObject);
         }
-        Vector2 portalPosition = Random.insideUnitCircle * maxPortalDistance;
+        Vector2 portalPosition = Random.insideUnitCircle.normalized * maxPortalDistance;
         portalObject = Instantiate(portalPrefab, new Vector3(portalPosition.x, portalPosition.y, 0), Quaternion.identity);
+        // instantiate Level and spawn Enemies
+        currLevel = transform.Find("Level" + level.ToString()).GetComponent<Level>();
+        if (currLevel != null)
+        {
+            currLevel.startLevel();
 
-        //update game state
-        buildManager.generateAvailableParts(level);
-        setGameState(GameState.BUILD);
+            //update game state
+            buildManager.generateAvailableParts(level);
+            setGameState(GameState.BUILD);
+        }
+        else
+        {
+            gameWon();
+        }
     }
 
     public void finishedBuilding()
@@ -119,8 +140,13 @@ public class GameManager : MonoBehaviour
             UIManager.instance.hidePlayUI();
             Destroy(obj);
             UIManager.instance.showInfoMessage("You died! Press SPACE to restart.");
-
         }
+    }
+    public void gameWon()
+    {
+        UIManager.instance.hidePlayUI();
+        gameState = GameState.END;
+        UIManager.instance.showInfoMessage("You Won!!!");
     }
 }
 
