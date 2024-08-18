@@ -9,7 +9,7 @@ public class GameManager : MonoBehaviour
     private Ship ship;
     public GameState gameState = GameState.BUILD;
     public static GameManager instance;
-    void Start()
+    void Awake()
     {
         buildManager = GameObject.FindGameObjectWithTag("BuildManager").GetComponent<BuildManager>();
         ship = GameObject.FindGameObjectWithTag("Ship").GetComponent<Ship>();

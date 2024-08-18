@@ -6,6 +6,9 @@ TagManager:
   tags:
   - BuildManager
   - Ship
+  - Thruster
+  - Canon
+  - CanonBall
   layers:
   - Default
   - TransparentFX
