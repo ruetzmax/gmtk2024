@@ -22,7 +22,7 @@ public class Canon : MonoBehaviour
     {
         mouseDir.z = 0;
         // Debug.Log(transform);
-        // spriteChild = transform.Find("canon");
+        spriteChild = transform.Find("canon");
         // Debug.Log(spriteChild);
         float angle = Vector3.SignedAngle(transform.up, mouseDir, Vector3.forward);
         float spriteTuUp = Vector3.SignedAngle(spriteChild.up, transform.up, Vector3.forward);
@@ -32,6 +32,21 @@ public class Canon : MonoBehaviour
 
     public void Shoot()
     {
-        Instantiate(canonBall, transform.position, spriteChild.rotation);
+        Vector3 offset = spriteChild.up * 0.2f;
+        GameObject newCanonBall = Instantiate(canonBall, spriteChild.position + offset, spriteChild.rotation);
+
+        Collider2D cannonCollider = GetComponent<Collider2D>();
+        Collider2D canonBallCollider = newCanonBall.GetComponent<Collider2D>();
+        if (cannonCollider != null && canonBallCollider != null)
+        {
+            Physics2D.IgnoreCollision(cannonCollider, canonBallCollider);
+        }
+
+        Rigidbody2D spaceshipRigidbody = GetComponentInParent<Rigidbody2D>();
+        Rigidbody2D cannonballRigidbody = newCanonBall.GetComponent<Rigidbody2D>();
+        if (spaceshipRigidbody != null && cannonballRigidbody != null)
+        {
+            cannonballRigidbody.velocity += spaceshipRigidbody.velocity;
+        }
     }
 }
