@@ -14,6 +14,7 @@ public class UIManager : MonoBehaviour
 
     public GameObject infoMessage;
     public GameObject targetArrow;
+    public GameObject healthIndicator;
     public float infoMessageDuration = 2.0f;
     private float infoMessageTimer = 0.0f;
 
@@ -28,6 +29,7 @@ public class UIManager : MonoBehaviour
         updateInfoMessage();
         if(GameManager.instance.gameState == GameState.PLAY){
             updateTargetArrow();
+            updateHealthIndicator();
         }
     }
 
@@ -78,6 +80,11 @@ public class UIManager : MonoBehaviour
         Vector3 direction = portalPosition - shipPosition;
         float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg - 90;
         targetArrow.transform.rotation = Quaternion.Euler(0, 0, angle);
+    }
+
+    private void updateHealthIndicator(){
+        float health = Mathf.RoundToInt(GameManager.instance.shipObject.GetComponent<HealthManager>().getHealth());
+        healthIndicator.GetComponent<TMP_Text>().text = "Health: " + health.ToString();
     }
 
     public void fillPartsView(List<Part> parts)

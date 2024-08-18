@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -35,6 +36,11 @@ public class GameManager : MonoBehaviour
         {
             toggleGameState();
         }
+
+        if (gameState == GameState.END && Input.GetKeyDown(KeyCode.Space))
+        {
+            SceneManager.LoadScene("main");
+        }
         
     }
 
@@ -68,6 +74,7 @@ public class GameManager : MonoBehaviour
             return;
         }
 
+        ship.setPositionToTileAvg();
         buildManager.previousShip = Instantiate(shipObject);
         buildManager.previousShip.SetActive(false);
 
@@ -103,10 +110,24 @@ public class GameManager : MonoBehaviour
         }
         gameState = state;
     }
+
+    public void objectKilled(GameObject obj)
+    {
+        if (obj.tag == "Ship")
+        {
+            gameState = GameState.END;
+            UIManager.instance.hidePlayUI();
+            Destroy(obj);
+            UIManager.instance.showInfoMessage("You died! Press SPACE to restart.");
+
+        }
+    }
 }
+
 
 public enum GameState
 {
     BUILD,
-    PLAY
+    PLAY,
+    END
 }

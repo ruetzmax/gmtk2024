@@ -248,9 +248,9 @@ public class BuildManager : MonoBehaviour
                 spriteColor.a = 1.0f;
                 shipPart.GetComponent<SpriteRenderer>().color = spriteColor;
 
-                FixedJoint2D joint = shipPart.gameObject.AddComponent<FixedJoint2D>();
-                joint.connectedBody = GameManager.instance.shipObject.GetComponent<Rigidbody2D>();
-                joint.enableCollision = false;
+                // FixedJoint2D joint = shipPart.gameObject.AddComponent<FixedJoint2D>();
+                // joint.connectedBody = GameManager.instance.shipObject.GetComponent<Rigidbody2D>();
+                // joint.enableCollision = false;
                 shipPart.transform.SetParent(GameManager.instance.shipObject.transform.Find("parts"));
                 shipPart.GetComponent<Collider2D>().isTrigger = false;
             }
@@ -262,9 +262,9 @@ public class BuildManager : MonoBehaviour
             spriteColor.a = 1.0f;
             activePartObject.GetComponent<SpriteRenderer>().color = spriteColor;
 
-            FixedJoint2D joint = activePartObject.AddComponent<FixedJoint2D>();
-            joint.connectedBody = GameManager.instance.shipObject.GetComponent<Rigidbody2D>();
-            joint.enableCollision = false;
+            // FixedJoint2D joint = activePartObject.AddComponent<FixedJoint2D>();
+            // joint.connectedBody = GameManager.instance.shipObject.GetComponent<Rigidbody2D>();
+            // joint.enableCollision = false;
             activePartObject.transform.SetParent(GameManager.instance.shipObject.transform.Find("parts"));
             activePartObject.GetComponent<Collider2D>().isTrigger = false;
         }
