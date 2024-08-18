@@ -22,7 +22,7 @@ public class Canon : MonoBehaviour
     {
         mouseDir.z = 0;
         // Debug.Log(transform);
-        // spriteChild = transform.Find("canon");
+        spriteChild = transform.Find("canon");
         // Debug.Log(spriteChild);
         float angle = Vector3.SignedAngle(transform.up, mouseDir, Vector3.forward);
         float spriteTuUp = Vector3.SignedAngle(spriteChild.up, transform.up, Vector3.forward);
