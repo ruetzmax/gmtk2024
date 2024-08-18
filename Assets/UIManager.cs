@@ -35,6 +35,7 @@ public class UIManager : MonoBehaviour
 
     public void showBuildUI()
     {
+        showInfoMessage("Build your spaceship!");
         playUI.SetActive(false);
         buildUI.SetActive(true);
         Canvas.ForceUpdateCanvases();

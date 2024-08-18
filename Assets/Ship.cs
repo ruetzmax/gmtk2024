@@ -15,7 +15,7 @@ public class Ship : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
         if (GameManager.instance.gameState != GameState.PLAY)
         {
