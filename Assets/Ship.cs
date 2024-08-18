@@ -44,6 +44,30 @@ public class Ship : MonoBehaviour
         {
             shootCanons();
         }
+        setPositionToTileAvg();
+
+    }
+
+    void setPositionToTileAvg()
+    {
+        Vector3 avgPosition = Vector3.zero;
+        int numParts = transform.Find("parts").childCount;
+        for (int i = 0; i < numParts; i++)
+        {
+            Transform shipPart = transform.Find("parts").GetChild(i);
+            avgPosition += shipPart.position;
+        }
+        avgPosition /= numParts;
+        Vector3 parentOffset = avgPosition - transform.position;
+
+        transform.position = avgPosition;
+
+        // Adjust the children's positions to keep them in the same world position
+        for (int i = 0; i < numParts; i++)
+        {
+            Transform shipPart = transform.Find("parts").GetChild(i);
+            shipPart.position -= parentOffset;
+        }
     }
 
     void activateThrusters(Vector3 direction)
