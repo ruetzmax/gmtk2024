@@ -14,6 +14,8 @@ public class BuildManager : MonoBehaviour
     public List<Part> availableParts;
 
     private GameObject activePartObject;
+    [HideInInspector]
+    public GameObject previousShip;
     void Start()
     {
     }
@@ -27,7 +29,7 @@ public class BuildManager : MonoBehaviour
         }  
 
         updateActivePartPosition();
-        GameManager.instance.shipObject.transform.position = new Vector3(0, 0, 0);
+        resetShip();
 
         if (Input.GetMouseButtonDown(0) && !EventSystem.current.IsPointerOverGameObject())
         {
@@ -60,14 +62,32 @@ public class BuildManager : MonoBehaviour
     private void addAvailablePart(GameObject prefab, GameObject uiElement = null){
         availableParts.Add(new Part { prefab = prefab, uiElement = uiElement });
     }
-    public void generateAvailableParts()
+    public void generateAvailableParts(int level)
     {
         availableParts = new List<Part>();
 
-        //only temporary, generate depending randomly and with previous ship versions
+        if (level == 1)
+        {
+            addAvailablePart(tilePrefab);
+            addAvailablePart(canonPrefab);
+            addAvailablePart(thrusterPrefab);
+            return;
+        }
+
+        //always add a tile
         addAvailablePart(tilePrefab);
-        addAvailablePart(canonPrefab);
-        addAvailablePart(thrusterPrefab);
+
+        //50% chance for each canon and thruster
+        if (Random.value < 0.5f)
+        {
+            addAvailablePart(canonPrefab);
+        }
+        if (Random.value < 0.5f)
+        {
+            addAvailablePart(thrusterPrefab);
+        }
+
+        addAvailablePart(previousShip);
     }
     public void setActivePart(Part part)
     {
@@ -77,17 +97,43 @@ public class BuildManager : MonoBehaviour
         }
         activePart = part;
         activePartObject = Instantiate(activePart.prefab);
-        Color spriteColor = activePartObject.GetComponent<SpriteRenderer>().color;
-        spriteColor.a = 0.5f;
-        activePartObject.GetComponent<SpriteRenderer>().color = spriteColor;
-        //activePartObject.GetComponent<Rigidbody2D>().isKinematic = false;
-        activePartObject.GetComponent<Collider2D>().isTrigger = true;
+        if (activePartObject.tag == "Ship")
+        {
+            activePartObject.SetActive(true);
+            foreach (Transform shipPart in activePartObject.transform.Find("parts"))
+            {
+                Color spriteColor = shipPart.GetComponent<SpriteRenderer>().color;
+                spriteColor.a = 0.5f;
+                shipPart.GetComponent<SpriteRenderer>().color = spriteColor;
+                shipPart.GetComponent<Collider2D>().isTrigger = true;
+            }
+        }
+        else{
+            Color spriteColor = activePartObject.GetComponent<SpriteRenderer>().color;
+            spriteColor.a = 0.5f;
+            activePartObject.GetComponent<SpriteRenderer>().color = spriteColor;
+            activePartObject.GetComponent<Collider2D>().isTrigger = true;
+        }
+        
 
     }
 
     public void setActivePart(GameObject prefab, GameObject uiElement = null)
     {
         setActivePart(new Part { prefab = prefab, uiElement = uiElement });
+    }
+
+    private void resetShip(){
+        GameManager.instance.shipObject.transform.position = new Vector3(0, 0, 0);
+        GameManager.instance.shipObject.transform.rotation = Quaternion.identity;
+        Rigidbody2D rb = GameManager.instance.shipObject.GetComponent<Rigidbody2D>();
+        rb.velocity = Vector2.zero;
+        rb.angularVelocity = 0f;
+
+        foreach (Transform part in GameManager.instance.shipObject.transform.Find("parts"))
+        {
+            part.transform.position = new Vector3(Mathf.Round(part.transform.position.x), Mathf.Round(part.transform.position.y), 0);
+        }
     }
 
     private void updateActivePartPosition()
@@ -104,7 +150,7 @@ public class BuildManager : MonoBehaviour
         for (int i = 0; i < GameManager.instance.shipObject.transform.Find("parts").childCount; i++)
         {
             Transform shipPart = GameManager.instance.shipObject.transform.Find("parts").GetChild(i);
-            if(shipPart.transform.position == position)
+            if (Vector3.Distance(shipPart.transform.position, position) < 0.05f)
             {
                 return true;
             }
@@ -115,22 +161,48 @@ public class BuildManager : MonoBehaviour
 
     private bool isValidPlace()
     {
-        // neighbours
-        if( !isPartPlacedAt(activePartObject.transform.position + new Vector3(1, 0, 0)) &&
-            !isPartPlacedAt(activePartObject.transform.position + new Vector3(-1, 0, 0)) &&
-            !isPartPlacedAt(activePartObject.transform.position + new Vector3(0, 1, 0)) &&
-            !isPartPlacedAt(activePartObject.transform.position + new Vector3(0, -1, 0)))
+        if (activePartObject.tag == "Ship")
         {
+            // on top
+            foreach (Transform part in activePartObject.transform.Find("parts"))
+            {
+                if (isPartPlacedAt(part.transform.position))
+                {
+                    return false;
+                }
+            }
+            // neighbours
+            foreach (Transform part in activePartObject.transform.Find("parts"))
+            {
+                if (isPartPlacedAt(part.transform.position + new Vector3(1, 0, 0)) ||
+                    isPartPlacedAt(part.transform.position + new Vector3(-1, 0, 0)) ||
+                    isPartPlacedAt(part.transform.position + new Vector3(0, 1, 0)) ||
+                    isPartPlacedAt(part.transform.position + new Vector3(0, -1, 0)))
+                {
+                    return true;
+                }
+            }
             return false;
-        }
 
-        //on top
-        if (isPartPlacedAt(activePartObject.transform.position))
-        {
-            return false;
         }
+        else{
+            // neighbours
+            if( !isPartPlacedAt(activePartObject.transform.position + new Vector3(1, 0, 0)) &&
+                !isPartPlacedAt(activePartObject.transform.position + new Vector3(-1, 0, 0)) &&
+                !isPartPlacedAt(activePartObject.transform.position + new Vector3(0, 1, 0)) &&
+                !isPartPlacedAt(activePartObject.transform.position + new Vector3(0, -1, 0)))
+            {
+                return false;
+            }
 
-        return true;
+            //on top
+            if (isPartPlacedAt(activePartObject.transform.position))
+            {
+                return false;
+            }
+
+            return true;
+        }
     }
 
     private void rotateActivePart(bool clockwise = true)
@@ -163,16 +235,40 @@ public class BuildManager : MonoBehaviour
         }
 
         //place part
-        Color spriteColor = activePartObject.GetComponent<SpriteRenderer>().color;
-        spriteColor.a = 1.0f;
-        activePartObject.GetComponent<SpriteRenderer>().color = spriteColor;
+        if (activePartObject.tag == "Ship")
+        {
+            List<Transform> shipParts = new List<Transform>();
+            foreach (Transform child in activePartObject.transform.Find("parts"))
+            {
+                shipParts.Add(child);
+            }
+            foreach (Transform shipPart in shipParts)
+            {
+                Color spriteColor = shipPart.GetComponent<SpriteRenderer>().color;
+                spriteColor.a = 1.0f;
+                shipPart.GetComponent<SpriteRenderer>().color = spriteColor;
 
-        FixedJoint2D joint = activePartObject.AddComponent<FixedJoint2D>();
-        joint.connectedBody = GameManager.instance.shipObject.GetComponent<Rigidbody2D>();
-        joint.enableCollision = false;
-        activePartObject.transform.SetParent(GameManager.instance.shipObject.transform.Find("parts"));
-        //activePartObject.GetComponent<Rigidbody2D>().isKinematic = false;
-        activePartObject.GetComponent<Collider2D>().isTrigger = false;
+                FixedJoint2D joint = shipPart.gameObject.AddComponent<FixedJoint2D>();
+                joint.connectedBody = GameManager.instance.shipObject.GetComponent<Rigidbody2D>();
+                joint.enableCollision = false;
+                shipPart.transform.SetParent(GameManager.instance.shipObject.transform.Find("parts"));
+                shipPart.GetComponent<Collider2D>().isTrigger = false;
+            }
+            Destroy(activePartObject);
+        }
+        else
+        {
+            Color spriteColor = activePartObject.GetComponent<SpriteRenderer>().color;
+            spriteColor.a = 1.0f;
+            activePartObject.GetComponent<SpriteRenderer>().color = spriteColor;
+
+            FixedJoint2D joint = activePartObject.AddComponent<FixedJoint2D>();
+            joint.connectedBody = GameManager.instance.shipObject.GetComponent<Rigidbody2D>();
+            joint.enableCollision = false;
+            activePartObject.transform.SetParent(GameManager.instance.shipObject.transform.Find("parts"));
+            activePartObject.GetComponent<Collider2D>().isTrigger = false;
+        }
+        
 
         Destroy(activePart.uiElement);
         availableParts.Remove(activePart);
@@ -180,9 +276,6 @@ public class BuildManager : MonoBehaviour
         activePart = null;
         activePartObject = null;
 
-
-        //DEBUG
-        // setActivePart(tilePrefab);
     }
 
 }
