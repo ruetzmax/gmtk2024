@@ -56,12 +56,6 @@ public class GameManager : MonoBehaviour
 
     void startLevel(int level)
     {
-        //debug
-        if (level == 2){
-            gameWon();
-            return;
-        }
-
         if (currLevel != null)
         {
             currLevel.endLevel();
