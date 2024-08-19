@@ -27,8 +27,8 @@ public class UIManager : MonoBehaviour
     public void Update()
     {
         updateInfoMessage();
-        if(GameManager.instance.gameState == GameState.PLAY){
-            updateTargetArrow();
+        updateTargetArrow();
+        if (GameManager.instance.gameState == GameState.PLAY){
             updateHealthIndicator();
         }
     }

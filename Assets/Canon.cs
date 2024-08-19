@@ -7,32 +7,54 @@ public class Canon : MonoBehaviour
     // Start is called before the first frame update
     Transform spriteChild;
     public GameObject canonBall;
+    public float cooldown = 0.3f;
+    float timer = 0;
+    BuildManager buildManager;
+
     void Start()
     {
         spriteChild = transform.Find("canon");
+        buildManager = GameObject.FindGameObjectWithTag("BuildManager").GetComponent<BuildManager>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        if (GameManager.instance.gameState != GameState.PLAY)
+        {
+            return;
+        }
+        bool connectedToBlock = buildManager.isPartPlacedAt(transform.position - transform.up);
+        if (!connectedToBlock)
+        {
+            Destroy(gameObject);
+        }
     }
 
     public void Rotate(Vector3 mouseDir)
     {
         mouseDir.z = 0;
         // Debug.Log(transform);
+        // spriteChild = GetComponent<Sprite>();
         spriteChild = transform.Find("canon");
         // Debug.Log(spriteChild);
         float angle = Vector3.SignedAngle(transform.up, mouseDir, Vector3.forward);
         float spriteTuUp = Vector3.SignedAngle(spriteChild.up, transform.up, Vector3.forward);
         angle = Mathf.Sign(angle) * Mathf.Min(Mathf.Abs(angle), 70);
-        spriteChild.Rotate(0, 0, spriteTuUp + angle);
+        // spriteChild.Rotate(0, 0, spriteTuUp + angle);
+        spriteChild.RotateAround(transform.position- transform.up * transform.localScale.y / 2, Vector3.forward, spriteTuUp + angle);
     }
 
     public void Shoot()
     {
-        Vector3 offset = spriteChild.up * 0.2f;
+        timer += Time.time;
+        if (timer < cooldown)
+        {
+            return;
+        }
+        timer = 0;
+
+        Vector3 offset = spriteChild.up * 0.5f;
         GameObject newCanonBall = Instantiate(canonBall, spriteChild.position + offset, spriteChild.rotation);
 
         Collider2D cannonCollider = GetComponent<Collider2D>();

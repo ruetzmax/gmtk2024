@@ -143,6 +143,9 @@ public class GameManager : MonoBehaviour
             UIManager.instance.hidePlayUI();
             Destroy(obj);
             UIManager.instance.showInfoMessage("You died! Press SPACE to restart.");
+        } else
+        {
+            Destroy(obj);
         }
     }
     public void gameWon()

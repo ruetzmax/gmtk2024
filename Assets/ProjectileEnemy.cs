@@ -63,5 +63,11 @@ public class ProjectileEnemy : Enemy
         {
             Physics2D.IgnoreCollision(shooterCollider, bulletCollider);
         }
+        Rigidbody2D m_Rigidbody = GetComponent<Rigidbody2D>();
+        Rigidbody2D projectileRigidbody = projectile.GetComponent<Rigidbody2D>();
+        if (m_Rigidbody != null && projectileRigidbody != null)
+        {
+            projectileRigidbody.velocity += m_Rigidbody.velocity;
+        }
     }
 }

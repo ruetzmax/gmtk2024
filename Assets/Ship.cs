@@ -33,8 +33,19 @@ public class Ship : MonoBehaviour
         {
             shootCanons();
         }
+        checkDestroyed();
         setPositionToTileAvg();
+    }
 
+    void checkDestroyed()
+    {
+        Transform parts = transform.Find("parts");
+        int numParts = parts.childCount;
+        Debug.Log(numParts);
+        if (numParts <= 0)
+        {
+            GameManager.instance.objectKilled(gameObject);
+        }
     }
 
     public void setPositionToTileAvg()

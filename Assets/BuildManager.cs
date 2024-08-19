@@ -146,7 +146,7 @@ public class BuildManager : MonoBehaviour
         activePartObject.transform.position = new Vector2(Mathf.Round(objectPosition.x), Mathf.Round(objectPosition.y));
     }
 
-    private bool isPartPlacedAt(Vector3 position){
+    public bool isPartPlacedAt(Vector3 position){
         for (int i = 0; i < GameManager.instance.shipObject.transform.Find("parts").childCount; i++)
         {
             Transform shipPart = GameManager.instance.shipObject.transform.Find("parts").GetChild(i);
@@ -185,24 +185,33 @@ public class BuildManager : MonoBehaviour
             return false;
 
         }
-        else{
-            // neighbours
-            if( !isPartPlacedAt(activePartObject.transform.position + new Vector3(1, 0, 0)) &&
-                !isPartPlacedAt(activePartObject.transform.position + new Vector3(-1, 0, 0)) &&
-                !isPartPlacedAt(activePartObject.transform.position + new Vector3(0, 1, 0)) &&
-                !isPartPlacedAt(activePartObject.transform.position + new Vector3(0, -1, 0)))
-            {
-                return false;
-            }
-
-            //on top
-            if (isPartPlacedAt(activePartObject.transform.position))
-            {
-                return false;
-            }
-
-            return true;
+        // neighbours
+        if( !isPartPlacedAt(activePartObject.transform.position + new Vector3(1, 0, 0)) &&
+            !isPartPlacedAt(activePartObject.transform.position + new Vector3(-1, 0, 0)) &&
+            !isPartPlacedAt(activePartObject.transform.position + new Vector3(0, 1, 0)) &&
+            !isPartPlacedAt(activePartObject.transform.position + new Vector3(0, -1, 0)))
+        {
+            return false;
         }
+
+        //on top
+        if (isPartPlacedAt(activePartObject.transform.position))
+        {
+            return false;
+        }
+
+        if (activePartObject.tag == "Canon")
+        {
+            Vector3 upDirection = activePartObject.transform.up;
+            upDirection.z = 0;
+            upDirection = upDirection.normalized;
+            if (!isPartPlacedAt(activePartObject.transform.position - upDirection))
+            {
+                return false;
+            }
+        }
+
+        return true;
     }
 
     private void rotateActivePart(bool clockwise = true)

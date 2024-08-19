@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 5245518115999162089}
   - component: {fileID: 5245518115999162088}
   - component: {fileID: 1418871012}
+  - component: {fileID: 7664522836851838056}
   m_Layer: 0
   m_Name: WormEnemy
   m_TagString: Enemy
@@ -49,7 +50,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Health: 10
-  speed: 1
+  speed: 7
   m_Rigidbody: {fileID: 0}
   drag: 1
 --- !u!212 &5245518115999162093
@@ -92,7 +93,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_Sprite: {fileID: 21300000, guid: 9ea2b2853b540b749930554008bda6f2, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -172,3 +173,17 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &7664522836851838056
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5245518115999162092}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d51fde3ff26e621439ee5d0fa717cc0e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maximumHealth: 50
+  collisionDamageMultiplier: 1

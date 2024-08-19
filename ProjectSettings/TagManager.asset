@@ -11,11 +11,12 @@ TagManager:
   - CanonBall
   - Tile
   - Portal
+  - Enemy
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Ship
   - Water
   - UI
   - 

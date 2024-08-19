@@ -46,17 +46,17 @@ public class Level : MonoBehaviour
         wormSpawnTimer += Time.deltaTime;
         if (flySpawnTimer > flySpawnRate)
         {
-            spawnEnemyAtShip(flyEnemyPrefab, flySpawnDist);
+            spawnEnemy(flyEnemyPrefab, flySpawnDist);
             flySpawnTimer = 0;
         }
         if (beetleSpawnTimer > beetleSpawnRate)
         {
-            spawnEnemyAtShip(beetleEnemyPrefab, beetleSpawnDist);
+            spawnEnemy(beetleEnemyPrefab, beetleSpawnDist);
             beetleSpawnTimer = 0;
         }
         if (wormSpawnTimer > wormSpawnRate)
         {
-            spawnEnemyAtShip(wormEnemyPrefab, wormSpawnDist);
+            spawnEnemy(wormEnemyPrefab, wormSpawnDist);
             wormSpawnTimer = 0;
         }
     }
@@ -74,6 +74,19 @@ public class Level : MonoBehaviour
         beetleSpawnTimer = 0;
         wormSpawnTimer = 0;
         despawnEnemies();
+    }
+
+    void spawnEnemy(GameObject enemyPrefab, float radius)
+    {
+        float r = Random.Range(0, 1);
+        if (r < 0.5)
+        {
+            spawnEnemyAtShip(enemyPrefab, radius);
+        } else
+        {
+            spawnEnemyAtPortal(enemyPrefab, radius);
+        }
+        Debug.Log("Enemy Spawned");
     }
 
     void despawnEnemies()
@@ -94,7 +107,6 @@ public class Level : MonoBehaviour
         }
         // float minDist = Mathf.Max(cam.pixelWidth / 2, cam.scal / 2);
         Vector3 upperRightPos = Camera.main.ViewportToWorldPoint(new Vector3(1.0f, 1.0f, -Camera.main.transform.position.z));
-        Debug.Log(upperRightPos);
         Vector3 cameraPos = Camera.main.transform.position;
         cameraPos.z = 0;
         upperRightPos.z = 0;
@@ -106,6 +118,19 @@ public class Level : MonoBehaviour
         Instantiate(enemyPrefab, new Vector3(enemyPos.x, enemyPos.y, 0), Quaternion.identity);
     }
 
+    void spawnEnemyAtPortal(GameObject enemyPrefab, float radius)
+    {
+        GameObject portalObject = GameManager.instance.portalObject;
+        if (portalObject == null)
+        {
+            return;
+        }
+        Vector3 portalPos = portalObject.transform.position;
+        Vector3 randomDir = Random.insideUnitSphere;
+        randomDir.z = 0;
+        Vector2 enemyPos = randomDir * radius;
+        Instantiate(enemyPrefab, new Vector3(enemyPos.x, enemyPos.y, 0), Quaternion.identity);
+    }
     /*void spawnEnemyAtPortal(GameObject enemyPrefab, float radius)
     {
     }*/
@@ -114,15 +139,15 @@ public class Level : MonoBehaviour
     {
         for (int i = 0; i < flyCount; i++)
         {
-            spawnEnemyAtShip(flyEnemyPrefab, flySpawnDist);
+            spawnEnemy(flyEnemyPrefab, flySpawnDist);
         }
         for (int i = 0; i < beetleCount; i++)
         {
-            spawnEnemyAtShip(beetleEnemyPrefab, beetleSpawnDist);
+            spawnEnemy(beetleEnemyPrefab, beetleSpawnDist);
         }
         for (int i = 0; i < wormCount; i++)
         {
-            spawnEnemyAtShip(wormEnemyPrefab, wormSpawnDist);
+            spawnEnemy(wormEnemyPrefab, wormSpawnDist);
         }
     }
 }

@@ -7,7 +7,7 @@ public class HealthManager : MonoBehaviour
     
     private float health;
     public float maximumHealth = 100;
-    public float collisionDamageMultiplier = 1.0f;
+    public float collisionDamageMultiplier = 0.5f;
     void Start()
     {
         resetHealth();
