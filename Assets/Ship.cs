@@ -6,10 +6,10 @@ public class Ship : MonoBehaviour
 {
     // Start is called before the first frame update
     public float thrusterMovementStrength = 2;
-    public float thrusterRotationStrength = 0.5f;
+    // public float thrusterRotationStrength = 0.5f;
 
     public float baseMovementForce = 3;
-    public float baseRotationForce = 3;
+    // public float baseRotationForce = 3;
     void Start()
     {
     }
@@ -132,11 +132,11 @@ public class Ship : MonoBehaviour
         }
         if (Input.GetKey(KeyCode.A))
         {
-            GetComponent<Rigidbody2D>().AddTorque(baseRotationForce + leftCount*thrusterRotationStrength);
+            GetComponent<Rigidbody2D>().AddForce(-transform.right * (baseMovementForce + leftCount*thrusterMovementStrength));
         }
         if (Input.GetKey(KeyCode.D))
         {
-            GetComponent<Rigidbody2D>().AddTorque(-(baseRotationForce + rightCount*thrusterRotationStrength));
+            GetComponent<Rigidbody2D>().AddForce(transform.right * (baseMovementForce + rightCount*thrusterMovementStrength));
         }
         
     }

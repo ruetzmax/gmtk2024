@@ -2017,7 +2017,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
+  m_Constraints: 4
 --- !u!114 &928763980
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2030,10 +2030,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e77638b91dff476428c048d3194e4b06, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  thrusterMovementStrength: 1.5
-  thrusterRotationStrength: 0.6
-  baseMovementForce: 0.2
-  baseRotationForce: 0.1
+  thrusterMovementStrength: 2
+  baseMovementForce: 0.5
 --- !u!114 &928763981
 MonoBehaviour:
   m_ObjectHideFlags: 0
