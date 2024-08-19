@@ -22,6 +22,8 @@ public class GameManager : MonoBehaviour
     public float maxPortalDistanceMultiplier = 1.5f;
 
     private Level currLevel;
+    [HideInInspector]
+    public int enemyKillCount = 0;
 
     void Start()
     {
@@ -54,6 +56,12 @@ public class GameManager : MonoBehaviour
 
     void startLevel(int level)
     {
+        //debug
+        if (level == 2){
+            gameWon();
+            return;
+        }
+
         if (currLevel != null)
         {
             currLevel.endLevel();
@@ -63,7 +71,7 @@ public class GameManager : MonoBehaviour
         //reset ship
         shipObject.transform.position = new Vector3(0, 0, 0);
         shipObject.transform.rotation = Quaternion.identity;
-        shipObject.GetComponent<HealthManager>().resetHealth();
+        
 
         //new portal
         if (portalObject != null)
@@ -101,6 +109,9 @@ public class GameManager : MonoBehaviour
         ship.setPositionToTileAvg();
         buildManager.previousShip = Instantiate(shipObject);
         buildManager.previousShip.SetActive(false);
+
+        ship.setHealthByPartCount();
+        shipObject.GetComponent<HealthManager>().resetHealth();
 
         setGameState(GameState.PLAY);
         UIManager.instance.showInfoMessage("Level " + level);
@@ -145,14 +156,15 @@ public class GameManager : MonoBehaviour
             UIManager.instance.showInfoMessage("You died! Press SPACE to restart.");
         } else
         {
+            enemyKillCount++;
             Destroy(obj);
         }
     }
     public void gameWon()
     {
-        UIManager.instance.hidePlayUI();
+        Destroy(shipObject);    
+        UIManager.instance.showEndScreen();
         gameState = GameState.END;
-        UIManager.instance.showInfoMessage("You Won!!!");
     }
 }
 

@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System;
 using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
@@ -9,6 +10,9 @@ public class UIManager : MonoBehaviour
     public static UIManager instance;
     public GameObject buildUI;
     public GameObject playUI;
+    public GameObject endScreen;
+    public GameObject timeText;
+    public GameObject killCountText;
     public GameObject partButtonPrefab;
     public GameObject scrollViewContent;
 
@@ -54,6 +58,19 @@ public class UIManager : MonoBehaviour
     public void hidePlayUI()
     {
         playUI.SetActive(false);
+    }
+
+    public void showEndScreen()
+    {
+        buildUI.SetActive(false);
+        playUI.SetActive(false);
+
+        TimeSpan levelTime = TimeSpan.FromSeconds(Time.timeSinceLevelLoad);
+        string formattedLevelTime = string.Format("{0:D2}:{1:D2}", levelTime.Minutes, levelTime.Seconds);
+        timeText.GetComponent<TMP_Text>().text = "Time: " + formattedLevelTime;
+
+        killCountText.GetComponent<TMP_Text>().text = "Enemies Killed: " + GameManager.instance.enemyKillCount;
+        endScreen.SetActive(true);
     }
 
     public void showInfoMessage(string message)
@@ -118,4 +135,5 @@ public class UIManager : MonoBehaviour
 
 
     }
+
 }

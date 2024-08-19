@@ -9,6 +9,7 @@ public class Ship : MonoBehaviour
     // public float thrusterRotationStrength = 0.5f;
 
     public float baseMovementForce = 3;
+    public int healthPerPart = 10;
     // public float baseRotationForce = 3;
     void Start()
     {
@@ -182,5 +183,10 @@ public class Ship : MonoBehaviour
             Canon canon = shipPart.GetComponent<Canon>();
             canon.Shoot();
         }
+    }
+
+    public void setHealthByPartCount(){
+        int numParts = transform.Find("parts").childCount;
+        GetComponent<HealthManager>().setMaximumHealth(numParts * healthPerPart);
     }
 }

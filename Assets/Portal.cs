@@ -6,7 +6,8 @@ public class Portal : MonoBehaviour
 {
     void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.gameObject.tag == "Tile" || other.gameObject.tag == "Canon" || other.gameObject.tag == "Thruster")
+        //if (other.gameObject.tag == "Tile" || other.gameObject.tag == "Canon" || other.gameObject.tag == "Thruster")
+        if (other.gameObject.tag == "Ship")
         {
             GameManager.instance.nextLevel();
         }

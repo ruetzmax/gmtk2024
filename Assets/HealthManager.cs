@@ -33,4 +33,9 @@ public class HealthManager : MonoBehaviour
     {
         health = maximumHealth;
     }
+
+    public void setMaximumHealth(float newMaxHealth)
+    {
+        maximumHealth = newMaxHealth;
+    }
 }
