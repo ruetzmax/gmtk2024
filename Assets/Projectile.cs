@@ -39,7 +39,7 @@ public class Projectile : MonoBehaviour
         }
     }
 
-    void OnTriggerEnter2D(Collider2D other)
+    void OnCollisionEnter2D(Collider2D other)
     {
         // Destroy(other.gameObject);
         Destroy(gameObject);

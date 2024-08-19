@@ -25,6 +25,9 @@ public class BackgoundImage : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D collision)
     {
         // Is the collision on the top / bottum / left or right?
+        if (collision.tag != "Ship"){
+            return;
+        }
         // TODO: Add Tag
         for (int x = -1; x <= 1; x++)
         {

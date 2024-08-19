@@ -54,14 +54,17 @@ public class Canon : MonoBehaviour
         }
         timer = 0;
 
-        Vector3 offset = spriteChild.up * 0.5f;
+        Vector3 offset = spriteChild.up * 0.7f;
+        Debug.Log("shoot");
         GameObject newCanonBall = Instantiate(canonBall, spriteChild.position + offset, spriteChild.rotation);
 
         Collider2D cannonCollider = GetComponent<Collider2D>();
         Collider2D canonBallCollider = newCanonBall.GetComponent<Collider2D>();
+        Collider2D shipCollider = GameManager.instance.shipObject.GetComponent<Collider2D>();
         if (cannonCollider != null && canonBallCollider != null)
         {
             Physics2D.IgnoreCollision(cannonCollider, canonBallCollider);
+            Physics2D.IgnoreCollision(shipCollider, canonBallCollider);
         }
 
         Rigidbody2D spaceshipRigidbody = GetComponentInParent<Rigidbody2D>();

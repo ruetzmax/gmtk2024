@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 1120815482731204738}
   - component: {fileID: 5288295134280430160}
   - component: {fileID: 4251143925791852108}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: thumbnail_space
   m_TagString: Background
   m_Icon: {fileID: 0}
