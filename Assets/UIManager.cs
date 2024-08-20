@@ -65,12 +65,13 @@ public class UIManager : MonoBehaviour
         buildUI.SetActive(false);
         playUI.SetActive(false);
 
+        endScreen.SetActive(true);
         TimeSpan levelTime = TimeSpan.FromSeconds(Time.timeSinceLevelLoad);
         string formattedLevelTime = string.Format("{0:D2}:{1:D2}", levelTime.Minutes, levelTime.Seconds);
         timeText.GetComponent<TMP_Text>().text = "Time: " + formattedLevelTime;
 
         killCountText.GetComponent<TMP_Text>().text = "Enemies Killed: " + GameManager.instance.enemyKillCount;
-        endScreen.SetActive(true);
+        Canvas.ForceUpdateCanvases();
     }
 
     public void showInfoMessage(string message)
@@ -93,6 +94,9 @@ public class UIManager : MonoBehaviour
     }
 
     private void updateTargetArrow(){
+        if (GameManager.instance.shipObject == null || GameManager.instance.portalObject == null){
+            return;
+        }
         Vector3 portalPosition = GameManager.instance.portalObject.transform.position;
         Vector3 shipPosition = GameManager.instance.shipObject.transform.position;
         Vector3 direction = portalPosition - shipPosition;

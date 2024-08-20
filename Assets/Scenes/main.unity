@@ -602,7 +602,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 170, y: -17}
+  m_AnchoredPosition: {x: 170, y: -5}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &275681230
@@ -759,27 +759,31 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1220909082707710337, guid: 79cc22541559e154bb93b6a24881eaae, type: 3}
       propertyPath: flyCount
-      value: 3
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 1220909082707710337, guid: 79cc22541559e154bb93b6a24881eaae, type: 3}
       propertyPath: wormCount
-      value: 2
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 1220909082707710337, guid: 79cc22541559e154bb93b6a24881eaae, type: 3}
       propertyPath: beetleCount
-      value: 3
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1220909082707710337, guid: 79cc22541559e154bb93b6a24881eaae, type: 3}
+      propertyPath: flySpawnDist
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 1220909082707710337, guid: 79cc22541559e154bb93b6a24881eaae, type: 3}
       propertyPath: flySpawnRate
-      value: 15
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 1220909082707710337, guid: 79cc22541559e154bb93b6a24881eaae, type: 3}
       propertyPath: wormSpawnRate
-      value: 20
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 1220909082707710337, guid: 79cc22541559e154bb93b6a24881eaae, type: 3}
       propertyPath: beetleSpawnRate
-      value: 15
+      value: 10
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 79cc22541559e154bb93b6a24881eaae, type: 3}
@@ -2141,7 +2145,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   thrusterMovementStrength: 5
   baseMovementForce: 1
-  healthPerPart: 20
+  healthPerPart: 10
 --- !u!114 &928763981
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2327,7 +2331,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 202, y: 23}
+  m_AnchoredPosition: {x: 202, y: 29}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1031974309
@@ -2623,11 +2627,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1220909082707710337, guid: 79cc22541559e154bb93b6a24881eaae, type: 3}
       propertyPath: wormCount
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 1220909082707710337, guid: 79cc22541559e154bb93b6a24881eaae, type: 3}
       propertyPath: beetleCount
-      value: 1
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 1220909082707710337, guid: 79cc22541559e154bb93b6a24881eaae, type: 3}
       propertyPath: flySpawnRate
@@ -2635,11 +2639,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1220909082707710337, guid: 79cc22541559e154bb93b6a24881eaae, type: 3}
       propertyPath: wormSpawnRate
-      value: 25
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 1220909082707710337, guid: 79cc22541559e154bb93b6a24881eaae, type: 3}
       propertyPath: beetleSpawnRate
-      value: 20
+      value: 10
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 79cc22541559e154bb93b6a24881eaae, type: 3}
@@ -2994,27 +2998,27 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1220909082707710337, guid: 79cc22541559e154bb93b6a24881eaae, type: 3}
       propertyPath: flyCount
-      value: 10
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 1220909082707710337, guid: 79cc22541559e154bb93b6a24881eaae, type: 3}
       propertyPath: wormCount
-      value: 10
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 1220909082707710337, guid: 79cc22541559e154bb93b6a24881eaae, type: 3}
       propertyPath: beetleCount
-      value: 10
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 1220909082707710337, guid: 79cc22541559e154bb93b6a24881eaae, type: 3}
       propertyPath: flySpawnRate
-      value: 5
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 1220909082707710337, guid: 79cc22541559e154bb93b6a24881eaae, type: 3}
       propertyPath: wormSpawnRate
-      value: 5
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 1220909082707710337, guid: 79cc22541559e154bb93b6a24881eaae, type: 3}
       propertyPath: beetleSpawnRate
-      value: 5
+      value: 4
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 79cc22541559e154bb93b6a24881eaae, type: 3}
@@ -3483,15 +3487,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1220909082707710337, guid: 79cc22541559e154bb93b6a24881eaae, type: 3}
       propertyPath: flySpawnRate
-      value: 10
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 1220909082707710337, guid: 79cc22541559e154bb93b6a24881eaae, type: 3}
       propertyPath: wormSpawnRate
-      value: 10
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 1220909082707710337, guid: 79cc22541559e154bb93b6a24881eaae, type: 3}
       propertyPath: beetleSpawnRate
-      value: 10
+      value: 6
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 79cc22541559e154bb93b6a24881eaae, type: 3}
@@ -4164,6 +4168,7 @@ MonoBehaviour:
   level: 0
   portalDistance: 20
   maxPortalDistanceMultiplier: 1.5
+  numLevels: 2
   enemyKillCount: 0
 --- !u!4 &2050507447
 Transform:

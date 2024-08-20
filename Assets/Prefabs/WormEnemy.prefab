@@ -50,7 +50,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Health: 10
-  speed: 4
+  speed: 7
   m_Rigidbody: {fileID: 0}
   drag: 1
 --- !u!212 &5245518115999162093

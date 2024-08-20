@@ -20,6 +20,7 @@ public class GameManager : MonoBehaviour
     public int level = 0;
     public int portalDistance = 15;
     public float maxPortalDistanceMultiplier = 1.5f;
+    public int numLevels = 2;
 
     private Level currLevel;
     [HideInInspector]
@@ -56,6 +57,7 @@ public class GameManager : MonoBehaviour
 
     void startLevel(int level)
     {
+
         if (currLevel != null)
         {
             currLevel.endLevel();
@@ -157,9 +159,8 @@ public class GameManager : MonoBehaviour
     }
     public void gameWon()
     {
-        Destroy(shipObject);    
-        UIManager.instance.showEndScreen();
         gameState = GameState.END;
+        UIManager.instance.showEndScreen();
     }
 }
 
