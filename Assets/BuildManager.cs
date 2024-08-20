@@ -105,14 +105,20 @@ public class BuildManager : MonoBehaviour
                 Color spriteColor = shipPart.GetComponent<SpriteRenderer>().color;
                 spriteColor.a = 0.5f;
                 shipPart.GetComponent<SpriteRenderer>().color = spriteColor;
-                shipPart.GetComponent<Collider2D>().isTrigger = true;
+                foreach (Collider2D collider in shipPart.GetComponents<Collider2D>())
+                {
+                    collider.isTrigger = true;
+                }
             }
         }
         else{
             Color spriteColor = activePartObject.GetComponent<SpriteRenderer>().color;
             spriteColor.a = 0.5f;
             activePartObject.GetComponent<SpriteRenderer>().color = spriteColor;
-            activePartObject.GetComponent<Collider2D>().isTrigger = true;
+            foreach (Collider2D collider in activePartObject.GetComponents<Collider2D>())
+            {
+                collider.isTrigger = true;
+            }
         }
         
 
@@ -261,7 +267,10 @@ public class BuildManager : MonoBehaviour
                 // joint.connectedBody = GameManager.instance.shipObject.GetComponent<Rigidbody2D>();
                 // joint.enableCollision = false;
                 shipPart.transform.SetParent(GameManager.instance.shipObject.transform.Find("parts"));
-                shipPart.GetComponent<Collider2D>().isTrigger = false;
+                foreach (Collider2D collider in shipPart.GetComponents<Collider2D>())
+                {
+                    collider.isTrigger = false;
+                }
             }
             Destroy(activePartObject);
         }
@@ -275,7 +284,10 @@ public class BuildManager : MonoBehaviour
             // joint.connectedBody = GameManager.instance.shipObject.GetComponent<Rigidbody2D>();
             // joint.enableCollision = false;
             activePartObject.transform.SetParent(GameManager.instance.shipObject.transform.Find("parts"));
-            activePartObject.GetComponent<Collider2D>().isTrigger = false;
+            foreach (Collider2D collider in activePartObject.GetComponents<Collider2D>())
+                {
+                    collider.isTrigger = false;
+                }
         }
         
 

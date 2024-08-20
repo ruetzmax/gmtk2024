@@ -39,9 +39,13 @@ public class Projectile : MonoBehaviour
         }
     }
 
-    void OnCollisionEnter2D(Collider2D other)
+    void OnCollisionEnter2D(Collision2D other)
     {
         // Destroy(other.gameObject);
-        Destroy(gameObject);
+        if (other.gameObject.tag == "Ship" || other.gameObject.tag == "Enemy")
+        {
+            Destroy(gameObject);
+
+        }
     }
 }

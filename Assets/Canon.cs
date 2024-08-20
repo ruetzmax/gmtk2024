@@ -20,15 +20,15 @@ public class Canon : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (GameManager.instance.gameState != GameState.PLAY)
-        {
-            return;
-        }
-        bool connectedToBlock = buildManager.isPartPlacedAt(transform.position - transform.up);
-        if (!connectedToBlock)
-        {
-            Destroy(gameObject);
-        }
+        // if (GameManager.instance.gameState != GameState.PLAY)
+        // {
+        //     return;
+        // }
+        // bool connectedToBlock = buildManager.isPartPlacedAt(transform.position - transform.up);
+        // if (!connectedToBlock)
+        // {
+        //     Destroy(gameObject);
+        // }
     }
 
     public void Rotate(Vector3 mouseDir)

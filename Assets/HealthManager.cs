@@ -20,6 +20,7 @@ public class HealthManager : MonoBehaviour
 
         if(health <= 0)
         {
+            health = 0;
             GameManager.instance.objectKilled(gameObject);
         } 
     }

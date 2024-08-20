@@ -77,9 +77,10 @@ public class GameManager : MonoBehaviour
         Vector2 portalPosition = new Vector2(Mathf.Cos(angle), Mathf.Sin(angle)) * portalDistance;
         portalObject = Instantiate(portalPrefab, new Vector3(portalPosition.x, portalPosition.y, 0), Quaternion.identity);
         // instantiate Level and spawn Enemies
-        currLevel = transform.Find("Level" + level.ToString()).GetComponent<Level>();
-        if (currLevel != null)
+        Transform currLevelObject = transform.Find("Level" + level.ToString());
+        if (currLevelObject != null)
         {
+            currLevel = currLevelObject.GetComponent<Level>();
             currLevel.startLevel();
 
             //update game state
